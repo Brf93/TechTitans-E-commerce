@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./admin.css" />
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
+    <title>Admin</title>
+</head>
+<body>
+    
+    <div id="admin" >
+        
+        <header >
+            <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark sticky carouselContainer nav">
+                <div class="container-fluid gap-5">
+                  <a class="navbar-brand text-green-neon" href="#">Logo</a>
+                  <button class="navbar-toggler buttonNavar d-flex d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class=""></div>
+                    <div class=""></div>
+                    <div class=""></div>
+                  </button>
+                  <div class="collapse navbar-collapse query-background gap-5" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-5 ">
+                      <li id="active" class="nav-item p-1 m-0">
+                        <a class="nav-link active text-green-neon m-0 " aria-current="page" href="./web/index.html"> Home </a>
+                      </li>
+                      <li class="nav-item p-1">
+                        <a class="nav-link text-green-neon" href="#">Products</a>
+                      </li>
+                      <li class="nav-item dropdown p-1">
+                        <div class="accountIcon">
+                        </div>
+                        <a class="nav-link dropdown-toggle text-green-neon" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Account
+                        </a>
+                        <ul class="dropdown-menu ul-style" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item text-green-neon" href="#"><span class="transactionHover">por definir</span></a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item text-green-neon " href="./settings.html"><span class="transactionHover">Change Password</span> </a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li class="d-flex">
+                            <a @click.prevent="logout" class="dropdown-item text-green-neon w-100 d-flex gap-2" href="#">
+                                <span class="transactionHover">Logout</span> 
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left text-white " viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                                </svg>
+                            </a>
+                            </li>
+                        </ul>
+                      </li>
+                      
+                    </ul>
+                    
+                    <div class="">
+                        <form class="d-flex search-style ">
+                            
+                                <button class="btn btn-outline-success text-green-neon" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                      </svg>
+                                </button>
+                                <input class="form-control me-2 text-green-neon search-input " type="search" placeholder="Search Client for email" aria-label="Search" v-model="InputSearch">
+                                {{searchClient}}
+                                {{searchProducts}}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        
+    </header>
+    
+    <main class="d-flex flex-column flex-lg-row  justify-content-center align-items-center  gap-4">
+            
+            
+          <div class="container-form">
+            <form action="" method="get">
+                <div class="d-flex flex-column align-items-center container-login p-4"  >
+                    <h2 class="text-white">Add Product</h2>
+                    
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100 gap-2">
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="loginEmail">Product Name:</label>
+                            <input class="w-100" id="loginEmail" v-model="productName" type="text" required>
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="PasswordLogin">Price:</label>
+                            <input class="w-100" id="PasswordLogin" type="number" v-model="price" required>
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="PasswordLogin">Code:</label>
+                            <input class="w-100" id="PasswordLogin" type="text" v-model="code" required>
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="description">Description:</label>
+                            <input class="w-100" id="description" type="text" v-model="description" required>
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="deleted">Type Product:</label>
+                            <select v-model="type" name="" id="">
+                                <option value="MONITOR">Monitor</option>
+                                <option value="CASE">Case</option>
+                                <option value="CASE_FAN">Case Fan</option>
+                                <option value="GPU">GPU</option>
+                                <option value="CPU_FAN">CPU Fan</option>
+                                <option value="KEYBOARD">Keyboard</option>
+                                <option value="MOTHERBOARD">Motherboard</option>
+                                <option value="MOUSE">Mouse</option>
+                                <option value="POWER_SUPPLY">Power Supply</option>
+                                <option value="PROCESSOR">Processor</option>
+                                <option value="RAM">RAM</option>
+                                <option value="STORAGE">Storage</option>
+                                <option value="MOUSE_PAD">Mouse Pad</option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="stock">Stock:</label>
+                            <input class="w-100" id="stock"  type="number" v-model="stock" required>
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="brand">Brand:</label>
+                            <input class="w-100" id="brand"  type="text" v-model="brand" required>
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="categories">Categories:</label>
+                            <input class="w-100" id="categories"  type="text" v-model="categoryPush" required>
+                            <button @click.prevent="addCategories">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                                  </svg>
+                            </button> 
+                        </div>
+                        <div class="d-flex flex-column w-100">
+                            <label class="text-white" for="images">Images:</label>
+                            <input class="w-100" id="images" type="file" accept="image/*" required multiple v-model="images">
+                            
+                        </div>
+                        
+                    </div>
+    
+                    <div class="d-flex justify-content-center my-3 w-100">
+                        <a @click.prevent="addProduct()" class="ancorLogin" href="./admin.html">
+                            <button class="button-64" role="button"><span class="text">Add Product</span></button>
+                        </a>
+                    </div>
+                    
+                    
+                </div>
+
+                
+
+            </form>
+            
+        </div>
+        <div class="d-flex flex-column gap-3">
+            
+            <div class="container-form-delete">
+                <form action="" method="get">
+                    <div class="d-flex flex-column align-items-center justify-content-between container-login delete-client h-100 p-3"  >
+                        <h2 class="text-white">Delete Product</h2>
+                        
+                        <div class="d-flex flex-column justify-content-center align-items-center w-100 gap-2">
+                            <div class="d-flex flex-column">
+                                <label class="text-white" for="loginEmail">id:</label>
+                                <input id="loginEmail" type="number" v-model="idProduct" required>
+                            </div>
+                            
+                            
+                        </div>
+        
+                        <div class="d-flex justify-content-center my-3 w-100">
+                            <a @click.prevent="disableProduct" class="ancorLogin" href="./index.html">
+                                <button class="button-64" role="button"><span class="text">Delete Product</span></button>
+                            </a>
+                        </div>
+                        
+                        
+                    </div>
+    
+                    
+    
+                </form>
+                
+            </div>
+            <div class="container-form-filter">
+                
+                <div class="d-flex flex-column align-items-center justify-content-between container-card delete-client h-100 p-3"  >
+                    <h2 class="text-white">Search Product</h2>
+                    
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100 gap-2">
+                        <table class="table">
+                            <thead class="text-white-bold">
+                              <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">stock</th>
+                                <th scope="col">code</th>
+                                <th scope="col">deleted</th>
+                              </tr>
+                            </thead>
+                            <tbody class="text-white-bold">
+                              <tr v-if="InputSearch.length > 0" v-for="product in productFilter">
+                                <th scope="row">{{product.id}}</th>
+                                <td>{{product.name}}</td>
+                                <td>{{product.categories[0]}}</td>
+                                <td>{{product.stock}}</td>
+                                <td>{{product.code}}</td>
+                                <td>{{product.deleted}}</td>
+                              </tr>
+                              
+                              
+                            </tbody>
+                          </table>
+                        
+                        
+                    </div>
+    
+                    
+                    
+                    
+                </div>
+    
+                
+    
+            
+                
+            </div>
+        </div>
+        <div class="d-flex flex-column gap-3">
+            <div class="container-form-delete">
+                <form action="" method="get">
+                    <div class="d-flex flex-column align-items-center justify-content-between container-login delete-client h-100 p-3"  >
+                        <h2 class="text-white">Delete Client</h2>
+                        
+                        <div class="d-flex flex-column justify-content-center align-items-center w-100 gap-2">
+                            <div class="d-flex flex-column">
+                                <label class="text-white" for="loginEmail">id:</label>
+                                <input id="loginEmail" type="number" v-model="id" required>
+                            </div>
+                            
+                            
+                        </div>
+        
+                        <div class="d-flex justify-content-center my-3 w-100">
+                            <a @click.prevent="disableClient" class="ancorLogin" href="./index.html">
+                                <button class="button-64" role="button"><span class="text">Delete Client</span></button>
+                            </a>
+                        </div>
+                        
+                        
+                    </div>
+    
+                    
+    
+                </form>
+                
+            </div>
+            <div class="container-form-filter">
+                
+                    <div class="d-flex flex-column align-items-center justify-content-between container-card delete-client h-100 p-3"  >
+                        <h2 class="text-white">Search Client</h2>
+                        
+                        <div class="d-flex flex-column justify-content-center align-items-center w-100 gap-2">
+                            <table class="table">
+                                <thead class="text-white-bold">
+                                  <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">FirstName</th>
+                                    <th scope="col">LastName</th>
+                                    <th scope="col">Email</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="text-white-bold">
+                                  <tr v-if="InputSearch.length > 0" v-for="client in clientFilter">
+                                    <th scope="row">{{client.id}}</th>
+                                    <td>{{client.firstName}}</td>
+                                    <td>{{client.lastName}}</td>
+                                    <td>{{client.email}}</td>
+                                  </tr>
+                                  
+                                  
+                                </tbody>
+                              </table>
+                            
+                            
+                        </div>
+        
+                        
+                        
+                        
+                    </div>
+    
+                    
+    
+                
+                    
+            </div>
+        </div>
+        </main>
+        
+        
+            
+        
+        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"
+        ></script>
+        <script src="./admin.js"></script>
+      </div>
+</body>
+</html>

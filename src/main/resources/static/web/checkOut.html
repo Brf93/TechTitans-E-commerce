@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/checkOut.css" />
+    <title>Checkout</title>
+</head>
+
+<body>
+    <div id="products">
+      <header>
+        <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark sticky carouselContainer nav">
+          <div class="container-fluid gap-5">
+            <a href="./index.html" class="navbar-brand text-green-neon" href=""><img style="width: 7rem;"
+                src="./images/techLogo.png" alt=""></a>
+            <button class="navbar-toggler buttonNavar d-flex d-md-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <div class=""></div>
+              <div class=""></div>
+              <div class=""></div>
+            </button>
+            <div class="collapse navbar-collapse query-background gap-5" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-5 ">
+                <li class="nav-item p-1 m-0">
+                  <a class="nav-link active text-green-neon m-0 " href="./index.html"> Home </a>
+                </li>
+                <li class="nav-item p-1">
+                  <a class="nav-link text-green-neon active" aria-current="page" href="./products.html">Products</a>
+                </li>
+                <li v-if="customer.length==0" class="nav-item p-1">
+  
+                  <a class="nav-link text-green-neon d-flex gap-2" href="./login.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd"
+                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+                      <path fill-rule="evenodd"
+                        d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                    </svg>
+                    <span>Sign In</span>
+                  </a>
+                </li>
+                <li v-if="customer.length!=0" class="nav-item dropdown p-1 d-flex">
+                  <div class="accountIcon">
+                  </div>
+                  <a class="nav-link dropdown-toggle text-green-neon" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Account
+                  </a>
+                  <ul class="dropdown-menu ul-style" aria-labelledby="navbarDropdown">
+                    <li data-bs-toggle="modal" data-bs-target="#walletModal">
+                      <a class="dropdown-item text-green-neon w-100 d-flex gap-2" href="#">
+                        <span class="transactionHover">Wallet</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                          class="bi bi-wallet2" viewBox="0 0 16 16">
+                          <path
+                            d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
+                        </svg>
+                      </a>
+                    </li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item text-green-neon " href="./settings.html"><span class="transactionHover">Change
+                      Password</span> </a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li class="d-flex">
+                  <a @click.prevent="logout" class="dropdown-item text-green-neon w-100 d-flex gap-2" href="#">
+                    <span class="transactionHover">Logout</span>
+  
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-box-arrow-left text-white " viewBox="0 0 16 16">
+                      <path fill-rule="evenodd"
+                        d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                      <path fill-rule="evenodd"
+                        d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+              </li>
+  
+              </ul>
+  
+              <button id="active" type="button" class="btn cart-nav d-flex gap-2" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                <div class="cart">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                  </svg>
+  
+                </div>
+                <span class="text-white-bold">Cart</span>
+              </button>
+  
+              <form class="d-flex search-style">
+                <button class="btn btn-outline-success text-green-neon" type="submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                  </svg>
+                </button>
+                <input class="form-control me-2 text-green-neon search-input " type="search" placeholder="Search"
+                  v-model="searchInput" aria-label="Search">
+                {{search}}
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+        <main class="d-flex flex-column justify-content-between align-items-center">
+            <div class="modal fade modal-style" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-style-radius">
+                  <div class="modal-content modal-style modal-style-radius">
+                    <div class="modal-header text-white-bold">
+                      <h5 class="modal-title" id="exampleModalLabel">Your Products</h5>
+                      <button type="button" class=" btn-modal-close-x d-flex justify-content-center align-items-center" data-bs-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="modal-body text-white-bold d-flex w-100">
+                      <table class="table">
+                        <thead class="text-white-bold">
+                          <tr>
+                            <th scope="col">View</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-white-bold">
+                          <tr v-for="product in productCart">
+                            <th scope="row">
+                            <figure>
+                                <img 
+                                v-bind:src="product.image[0]"
+                                alt="">
+                            </figure></th>
+                            <td>{{product.name.slice(0,35)}}...</td>
+                            <td>x1</td>
+                            <td>${{product.price}}</td>
+                            <td>
+                                
+                                <svg @click="removeFromCart(product)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-x-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zM6.854 5.146a.5.5 0 1 0-.708.708L7.293 7 6.146 8.146a.5.5 0 1 0 .708.708L8 7.707l1.146 1.147a.5.5 0 1 0 .708-.708L8.707 7l1.147-1.146a.5.5 0 0 0-.708-.708L8 6.293 6.854 5.146z"/>
+                                </svg>
+                            </td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-modal-close" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-modal-buy">Buy</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade modal-style-wallet" id="walletModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-style-radius">
+                  <div class="modal-content modal-style-wallet modal-style-radius">
+                    <div class="modal-header header-wallet text-white-bold">
+                      <h5 class="modal-title" id="exampleModalLabel">Wallet</h5>
+                      <button type="button" class=" btn-modal-close-x d-flex justify-content-center align-items-center" data-bs-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="modal-body body-wallet text-white-bold d-flex w-100">
+                      <table class="table">
+                        <thead class="text-white-bold">
+                          <tr>
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-white-bold">
+                          <tr>
+                            <tr>
+                              <th scope="row">Pedro</th>
+                              <td>Vega</td>
+                              
+                              <td>$999</td>
+                              
+                            </tr>
+                          </tr>
+                        </tbody>
+                      </table>                      
+                    </div>
+                    <div class="modal-footer header-wallet">
+                      <button type="button" class="btn btn-modal-close-wallet" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-10 d-flex flex-column backgroundCheckout text-white p-3 m-3 shadow rounded">
+                <div class="text-center w-100 mb-3">
+                <h4>CHECKOUT</h4>
+                </div>
+                <div class="w-100 d-flex flex-row gap-3 m-2" v-if = "productCart.length > 0">
+                    <div class="d-flex flex-column col-6">
+                        <h6>Billing details:</h6>
+                        <form class="mt-2 row g-3 needs-validation" novalidate>
+                            <div class="col-md-4">
+                              <label for="validationCustom01" class="form-label">First name</label>
+                              <input type="text" class="form-control" id="validationCustom01" value="Mark" required v-model = "firstNameInput">
+                              <div class="valid-feedback">
+                                Looks good!
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <label for="validationCustom02" class="form-label">Last name</label>
+                              <input type="text" class="form-control" id="validationCustom02" value="Otto" required v-model = "lastNameInput">
+                              <div class="valid-feedback">
+                                Looks good!
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <label for="validationCustomUsername" class="form-label">Email</label>
+                              <div class="input-group has-validation">
+                                <span class="input-group-text emailSpan" id="inputGroupPrepend"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-at" viewBox="0 0 16 16">
+                                    <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"/>
+                                    <path d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z"/>
+                                  </svg></span>
+                                <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required v-model = "emailInput">
+                                <div class="invalid-feedback">
+                                  Please choose a username.
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="validationCustom03" class="form-label">City</label>
+                              <input type="text" class="form-control" id="validationCustom03" required v-model = "cityInput">
+                              <div class="invalid-feedback">
+                                Please provide a valid city.
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <label for="validationCustom04" class="form-label">State</label>
+                              <select class="form-select selectSize " id="validationCustom04" required v-model = "stateInput">
+                                <option selected disabled :value="">Choose...</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                              </select>
+                              <div class="invalid-feedback">
+                                Please select a valid state.
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <label for="validationCustom05" class="form-label">Zip code</label>
+                              <input type="text" class="form-control" id="validationCustom05" required v-model = "zipCodeInput">
+                              <div class="invalid-feedback">
+                                Please provide a valid zip.
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="validationCustom07" class="form-label">Street number</label>
+                                <input type="text" class="form-control" id="validationCustom07" required v-model = "streetNumberInput">
+                                <div class="invalid-feedback">
+                                  Please provide a valid city.
+                                </div>
+                              </div>
+                            <div class="col-md-6">
+                                <label for="validationCustom06" class="form-label">Street</label>
+                                <input type="text" class="form-control" id="validationCustom06" required v-model = "streetNameInput">
+                                <div class="invalid-feedback">
+                                  Please provide a valid city.
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="validationCustom08" class="form-label">Apt. (optional)</label>
+                                <input type="text" class="form-control" id="validationCustom08" v-model = "aptNumber">
+                                <div class="invalid-feedback">
+                                  Please provide a valid city.
+                                </div>
+                              </div>
+                              <div class="col-md-6 d-flex justify-content-center align-self-end btnPay">
+                                <a @click="clientInfo()" class="detailBtn d-flex align-self-center align-items-center justify-content-center">Go pay</a>
+                              </div>
+                            <div class="col-12">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required v-model = "agreeCheckbox">
+                                <label class="form-check-label" for="invalidCheck">
+                                  Agree to terms and conditions
+                                </label>
+                                <div class="invalid-feedback">
+                                  You must agree before submitting.
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                    </div>
+                    <div class="d-flex flex-column col-6">
+                        <div>
+                            <h6>Your products:</h6>
+                        </div>
+                        <div class="modal-body text-white-bold d-flex w-100">
+                            <table class="table ">
+                              <thead class="text-white-bold w-100">
+                                <tr>
+                                  <th scope="col">View</th>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">Quantity</th>
+                                  <th scope="col">Price</th>
+                                  <th scope="col">Delete</th>
+                                </tr>
+                              </thead>
+                              <tbody class="text-white-bold">
+                                <tr v-for="product in productCart">
+                                  <th scope="row">
+                                  <figure>
+                                      <img 
+                                      v-bind:src="product.image[0]"
+                                      alt="">
+                                  </figure></th>
+                                  <td>{{product.name.slice(0,35)}}...</td>
+                                  <td>x1</td>
+                                  <td>${{product.price}}</td>
+                                  <td>
+                                      <svg @click="removeFromCart(product)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-x-fill" viewBox="0 0 16 16">
+                                          <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zM6.854 5.146a.5.5 0 1 0-.708.708L7.293 7 6.146 8.146a.5.5 0 1 0 .708.708L8 7.707l1.146 1.147a.5.5 0 1 0 .708-.708L8.707 7l1.147-1.146a.5.5 0 0 0-.708-.708L8 6.293 6.854 5.146z"/>
+                                      </svg>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" v-else>
+                  <span>No products in your shopping cart</span>
+                </div>
+            </div>
+        </main>
+        <div class="footer-dark">
+            <footer class="d-flex flex-column gap-5 ">
+                <div class="container">
+                  <div class="row d-flex justify-content-around">
+                    <div class="col-sm-6 col-md-3 item ">
+                      <h3>Services</h3>
+                      <ul class="item text">
+                        <li class="ancor-footer ">Web design</li>
+                        <li class="ancor-footer ">Development</li>
+                      </ul>
+                    </div>
+        
+                    <div class="col-md-6 item text">
+                      <h3 class="ancor-footer">Tech Titans</h3>
+                      <p class="ancor-footer">First in giving you the best components for your pc and get the best and most pleasant experience.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="slider">
+                  <div class="slide-track gap-5">
+                    <div class="slide">
+                      <img src="./images/nvidia.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                      <img src="./images/gxGaming.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                      <img src="./images/genius.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                      <img src="./images/msi.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide m-1">
+                      <img src="./images/asus.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                      <img src="./images/kingston.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                      <img src="./images/intel.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                      <img src="./images/amd.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                      <img src="./images/evga.png" height="100" width="250" alt="" />
+                    </div>
+                    <div class="slide">
+                      <img src="./images/hyperex.png" height="100" width="250" alt="" />
+                    </div>
+        
+                  </div>
+                </div>
+                <h5 class="text-center">Socials</h5>
+                <div class="d-flex justify-content-center gap-4">
+                  <!-- <a class="icon-ancor " href="https://www.linkedin.com/in/franco-brizzio/"></a>
+                  <a class="icon-ancor " href="https://www.linkedin.com/in/elias-medina-java/"></a>
+                  <a class="icon-ancor " href="https://www.linkedin.com/in/pedro-vega-72a7a8239/"></a>
+                  <a class="icon-ancor " href="https://www.linkedin.com/in/felipe-galleguillos/"></a> -->
+                  <ul class="ax-card">
+                    <li>
+                      <div class="cdbox">
+                        <a class="icon-ancor " href="https://www.linkedin.com/in/franco-brizzio/"></a>
+                        <span class="tooltip">Franco Brizzio</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="cdbox">
+                        <a class="icon-ancor " href="https://www.linkedin.com/in/elias-medina-java/"></a>
+                        <span class="tooltip">Elias Medina</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="cdbox">
+                        <a class="icon-ancor " href="https://www.linkedin.com/in/pedro-vega-72a7a8239/"></a>
+                        <span class="tooltip">Pedro Vega</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="cdbox">
+                        <a class="icon-ancor " href="https://www.linkedin.com/in/felipe-galleguillos-722999263/"></a>
+                        <span class="tooltip">Felipe Galleguillos</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <p class="copyright ancor-footer">Tech titans © 2023</p>
+              </footer>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="./js/checkOut.js"></script>
+    </div>
+</body>
+
+</html>

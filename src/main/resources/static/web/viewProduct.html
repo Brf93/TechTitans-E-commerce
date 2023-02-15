@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/viewProduct.css" />
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
+    <title>Product</title>
+</head>
+<body>
+    
+    <div id="product">
+        
+        <header >
+            <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark sticky carouselContainer nav">
+                <div class="container-fluid gap-5">
+                  <a href="./index.html" class="navbar-brand text-green-neon" href=""><img style="width: 7rem;" src="./images/techLogo.png" alt=""></a>
+                  <button class="navbar-toggler buttonNavar d-flex d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class=""></div>
+                    <div class=""></div>
+                    <div class=""></div>
+                  </button>
+                  <div class="collapse navbar-collapse query-background gap-5" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-5 ">
+                      <li  class="nav-item p-1 m-0">
+                        <a class="nav-link text-green-neon m-0 "  href="./index.html"> Home </a>
+                      </li>
+                      <li class="nav-item p-1">
+                        <a class="nav-link active text-green-neon" aria-current="page" href="./products.html">Products</a>
+                      </li>
+                      <li v-if="customer.length==0" class="nav-item p-1">
+                          
+                        <a class="nav-link text-green-neon d-flex gap-2" href="./login.html">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                          </svg>
+                          <span>Sign In</span> 
+                        </a>
+                      </li>
+                      <li  v-if="customer.length!=0" class="nav-item dropdown p-1 d-flex">
+                        <div class="accountIcon">
+                        </div>
+                        <a class="nav-link dropdown-toggle text-green-neon" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Account
+                        </a>
+                        <ul class="dropdown-menu ul-style" aria-labelledby="navbarDropdown">
+                          <li data-bs-toggle="modal" data-bs-target="#walletModal">
+                            <a class="dropdown-item text-green-neon w-100 d-flex gap-2" href="#">
+                              <span class="transactionHover">Wallet</span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
+                                <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z"/>
+                              </svg>
+                            </a>
+                          </li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item text-green-neon " href="./settings.html"><span class="transactionHover">Change Password</span> </a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li class="d-flex">
+                            <a @click.prevent="logout" class="dropdown-item text-green-neon w-100 d-flex gap-2" href="#">
+                                <span class="transactionHover">Logout</span> 
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left text-white " viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                                </svg>
+                            </a>
+                            </li>
+                        </ul>
+                      </li>
+                      
+                    </ul>
+                    <button type="button" class="btn cart-nav d-flex gap-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <div class="cart">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                          
+                      </div>
+                      <span class="text-white-bold">Cart</span>
+                    </button>
+                  
+                    <form class="d-flex search-style">
+                        <button class="btn btn-outline-success text-green-neon" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                              </svg>
+                        </button>
+                      <input class="form-control me-2 text-green-neon search-input " type="search" placeholder="Search" aria-label="Search">
+                    </form>
+                  </div>
+                </div>
+              </nav>
+              
+        
+        </header>
+        
+        <main class="d-flex justify-content-center align-items-center flex-wrap ">
+          <!-- Modal -->
+          <div class="modal fade modal-style" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-style-radius">
+              <div class="modal-content modal-style modal-style-radius">
+                <div class="modal-header text-white-bold">
+                  <h5 class="modal-title" id="exampleModalLabel">Your Products</h5>
+                  <button type="button" class=" btn-modal-close-x d-flex justify-content-center align-items-center" data-bs-dismiss="modal" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="modal-body text-white-bold d-flex w-100">
+                  <table class="table">
+                    <thead class="text-white-bold">
+                      <tr>
+                        <th scope="col">View</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-white-bold">
+                      <tr v-for="product in productCart">
+                        <th scope="row">
+                        <figure>
+                            <img 
+                            v-bind:src="product.image[0]"
+                            alt="">
+                        </figure></th>
+                        <td>{{ limitWords(titleShort, 5) }}</td>
+                        <td>x1</td>
+                        <td>${{product.price}}</td>
+                        <td>
+                                
+                          <svg @click="removeFromCart(product)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-x-fill" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zM6.854 5.146a.5.5 0 1 0-.708.708L7.293 7 6.146 8.146a.5.5 0 1 0 .708.708L8 7.707l1.146 1.147a.5.5 0 1 0 .708-.708L8.707 7l1.147-1.146a.5.5 0 0 0-.708-.708L8 6.293 6.854 5.146z"/>
+                          </svg>
+                      </td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                  
+                  
+                </div>
+                <div class="modal-footer">
+                  <span class="text-white-bold" v-if="customer.length==0">Sign in to continue purchase</span>
+                  <button type="button" class="btn btn-modal-close" data-bs-dismiss="modal">Close</button>
+                  <button  v-if="customer.length!=0" type="button" class="btn btn-modal-buy">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade modal-style-wallet" id="walletModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-style-radius">
+              <div class="modal-content modal-style-wallet modal-style-radius">
+                <div class="modal-header header-wallet text-white-bold">
+                  <h5 class="modal-title" id="exampleModalLabel">Wallet</h5>
+                  <button type="button" class=" btn-modal-close-x d-flex justify-content-center align-items-center" data-bs-dismiss="modal" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="modal-body body-wallet text-white-bold d-flex w-100">
+                  <table class="table">
+                    <thead class="text-white-bold">
+                      <tr>
+                        <th scope="col">FirstName</th>
+                        <th scope="col">LastName</th>
+                        <th scope="col">amount</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-white-bold">
+                      <tr>
+                        <tr>
+                          <th scope="row">Pedro</th>
+                          <td>Vega</td>
+                          
+                          <td>$999</td>
+                          
+                        </tr>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                  
+                  
+                </div>
+                <div class="modal-footer header-wallet">
+                  <button type="button" class="btn btn-modal-close-wallet" data-bs-dismiss="modal">Close</button>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="background-blur d-flex flex-wrap w-100  ">
+              
+              <div class="d-flex flex-column flex-md-row w-100 container-info-product-left  gap-4 p-3 ">
+                <div class="w-100 w-md-50">
+                  
+                    <div class="w-100 d-flex flex-column justify-content-center align-items-center img-product">
+                      <div class="product-image">
+                        <img class="active query-img-Active" :src="activeImage">
+                      </div>
+                      <ul class="image-list">
+                        <li class="image-item" v-for="image in productImages">
+                          <img :src="image" @click="changeImage(image)" alt="">
+                        </li>
+                      </ul>
+                    </div>
+                  
+                </div>
+                <div class="d-flex flex-column justify-content-between w-100 w-md-50 container-info-product flex-wrap">
+                  <div class="container-info d-flex flex-column w-100 flex-wrap text-break-css">
+                    <h1 class="description  ancor-footer" >{{ limitWords(titleShort, 5) }}</h1>
+                    <h2 class="description ancor-footer">${{productId.price}}</h2>
+                    <div class="description ancor-footer d-flex flex-column flex-wrap text-break-css ">
+                      <p class="d-flex flex-wrap text-break-css">Stock: {{productId.stock}}</p>
+                      <p class="d-flex flex-wrap text-break-css">Brand: {{productId.brand}}</p>
+                      <p class="text-break-css">{{productId.description}}</p>
+                    </div>
+                  </div>
+                  <div class="w-100 p-1">
+                      <button @click="addCart(productId)" class="add-to-cart w-100 d-flex  justify-content-center"> <span>Add To Cart</span> </button>
+                  </div>
+                </div>
+              </div>
+              <div class="product-recommendation d-flex flex-column justify-content-center align-items-center w-100 gap-3">
+                <div class="text-white-bold">
+                  <h3>You may also like</h3>
+                </div>
+                <div class="d-flex flex-column flex-md-row gap-3 mb-4">
+                  <template v-for="product in productsCategorie" >
+                    <a class="ancor-product-categories" :href="'./viewProduct.html?id='+ product.id">
+                      <div class="d-flex flex-column text-white-bold justify-content-center align-items-center product-recomended">
+                        <figure>
+                          <img v-bind:src="product.image[0]">
+                        </figure>
+                        <h4 class="title-card">{{product.name}}</h4>
+                        <p class="price">${{product.price}}</p>
+                      </div>
+                    </a>
+                  </template>
+                  
+                </div>
+              </div>
+            </div>
+          </main>
+        
+        
+            
+          <div class="footer-dark">
+
+            <footer class="d-flex flex-column gap-5 ">
+              <div class="container">
+                <div class="row d-flex justify-content-around">
+                  <div class="col-sm-6 col-md-3 item ">
+                    <h3>Services</h3>
+                    <ul class="item text">
+                      <li class="ancor-footer ">Web design</li>
+                      <li class="ancor-footer ">Development</li>
+                    </ul>
+                  </div>
+      
+                  <div class="col-md-6 item text">
+                    <h3 class="ancor-footer">Tech Titans</h3>
+                    <p class="ancor-footer">First in giving you the best components for your pc and get the best and most pleasant experience.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="slider">
+                <div class="slide-track gap-5">
+                  <div class="slide">
+                    <img src="./images/nvidia.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide">
+                    <img src="./images/gxGaming.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide">
+                    <img src="./images/genius.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide">
+                    <img src="./images/msi.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide m-1">
+                    <img src="./images/asus.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide">
+                    <img src="./images/kingston.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide">
+                    <img src="./images/intel.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide">
+                    <img src="./images/amd.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide">
+                    <img src="./images/evga.png" height="100" width="250" alt="" />
+                  </div>
+                  <div class="slide">
+                    <img src="./images/hyperex.png" height="100" width="250" alt="" />
+                  </div>
+      
+                </div>
+              </div>
+              <h5 class="text-center">Socials</h5>
+              <div class="d-flex justify-content-center gap-4">
+                <!-- <a class="icon-ancor " href="https://www.linkedin.com/in/franco-brizzio/"></a>
+                <a class="icon-ancor " href="https://www.linkedin.com/in/elias-medina-java/"></a>
+                <a class="icon-ancor " href="https://www.linkedin.com/in/pedro-vega-72a7a8239/"></a>
+                <a class="icon-ancor " href="https://www.linkedin.com/in/felipe-galleguillos/"></a> -->
+                <ul class="ax-card">
+                  <li>
+                    <div class="cdbox">
+                      <a class="icon-ancor " href="https://www.linkedin.com/in/franco-brizzio/"></a>
+                      <span class="tooltip">Franco Brizzio</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="cdbox">
+                      <a class="icon-ancor " href="https://www.linkedin.com/in/elias-medina-java/"></a>
+                      <span class="tooltip">Elias Medina</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="cdbox">
+                      <a class="icon-ancor " href="https://www.linkedin.com/in/pedro-vega-72a7a8239/"></a>
+                      <span class="tooltip">Pedro Vega</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="cdbox">
+                      <a class="icon-ancor " href="https://www.linkedin.com/in/felipe-galleguillos-722999263/"></a>
+                      <span class="tooltip">Felipe Galleguillos</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <p class="copyright ancor-footer">Tech titans © 2023</p>
+      
+            </footer>
+          </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"
+        ></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="./js/viewProduct.js"></script>
+    </div>
+</body>
+</html>
